@@ -6,6 +6,8 @@ import { AuthContext } from '../context/AuthContext';
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
+  const [id, setId] = useState('');
+  const [ip, setIp] = useState('');
   const [pass, setPass] = useState('');
   const [error, setError] = useState('');
   const { setUser } = useContext(AuthContext);
@@ -28,19 +30,33 @@ export default function LoginScreen() {
         style={styles.logo}
         resizeMode="contain"
       />
-      <TextInput
+      {/* <TextInput
         style={styles.input}
         placeholder="Email"
         onChangeText={setEmail}
         keyboardType="email-address"
         autoCapitalize="none"
+      /> */}
+      <TextInput
+        style={styles.input}
+        placeholder="ID"
+        onChangeText={setId}
+        keyboardType="numeric"
+        autoCapitalize="none"
       />
       <TextInput
+        style={styles.input}
+        placeholder="IP"
+        onChangeText={setIp}
+        keyboardType="numeric"
+        autoCapitalize="none"
+      />
+      {/* <TextInput
         style={styles.input}
         placeholder="Password"
         secureTextEntry
         onChangeText={setPass}
-      />
+      /> */}
       <Button title="Login" onPress={login} />
       {error ? <Text style={styles.error}>{error}</Text> : null}
     </View>

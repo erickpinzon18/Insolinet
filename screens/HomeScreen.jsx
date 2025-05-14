@@ -14,12 +14,12 @@ export default function HomeScreen() {
             resizeMode="cover"
           />
           <Image
-            source={require("../assets/packages/basic_package.jpeg")}
+            source={require("../assets/packages/school_package.jpeg")}
             style={styles.image}
             resizeMode="cover"
           />
           <Image
-            source={require("../assets/packages/basic_package.jpeg")}
+            source={require("../assets/packages/pro_package.jpeg")}
             style={styles.image}
             resizeMode="cover"
           />
