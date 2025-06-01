@@ -1,42 +1,37 @@
 import { useState, useContext } from 'react';
-import { View, TextInput, Button, Text, StyleSheet, Image } from 'react-native';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../firebase/firebaseConfig';
+import { View, TextInput, Button, Text, StyleSheet, Image, ActivityIndicator } from 'react-native';
 import { AuthContext } from '../context/AuthContext';
 
 export default function LoginScreen() {
-  const [email, setEmail] = useState('');
   const [id, setId] = useState('');
-  const [ip, setIp] = useState('');
-  const [pass, setPass] = useState('');
+  const [number, setNumber] = useState('');
   const [error, setError] = useState('');
-  const { setUser } = useContext(AuthContext);
+  const { login } = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
 
-  const login = async () => {
+  const loginLocal = async () => {
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, pass);
-      setUser(userCredential.user); // Guarda la información del usuario en el contexto
+      setLoading(true);
       setError('');
+      await login({ id, number });
     } catch (e) {
-      console.error("Error al iniciar sesión:", e);
-      setError("Error al iniciar sesión. Verifica tus credenciales.");
+      setError(e.message);
     }
+    setLoading(false);
   };
 
   return (
     <View style={styles.container}>
+      {loading && (
+        <View style={styles.overlay}>
+          <ActivityIndicator size="large" color="#1877F3" />
+        </View>
+      )}
       <Image
         source={require('../assets/logo.png')}
         style={styles.logo}
         resizeMode="contain"
       />
-      {/* <TextInput
-        style={styles.input}
-        placeholder="Email"
-        onChangeText={setEmail}
-        keyboardType="email-address"
-        autoCapitalize="none"
-      /> */}
       <TextInput
         style={styles.input}
         placeholder="ID"
@@ -46,18 +41,12 @@ export default function LoginScreen() {
       />
       <TextInput
         style={styles.input}
-        placeholder="IP"
-        onChangeText={setIp}
+        placeholder="Número de Teléfono"
+        onChangeText={setNumber}
         keyboardType="numeric"
         autoCapitalize="none"
       />
-      {/* <TextInput
-        style={styles.input}
-        placeholder="Password"
-        secureTextEntry
-        onChangeText={setPass}
-      /> */}
-      <Button title="Login" onPress={login} />
+      <Button title="Login" onPress={loginLocal} />
       {error ? <Text style={styles.error}>{error}</Text> : null}
     </View>
   );
@@ -89,6 +78,13 @@ const styles = StyleSheet.create({
     marginTop: 12,
     color: 'red',
     textAlign: 'center',
+  },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0,0,0,0.25)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 10,
   },
 });
 
