@@ -10,7 +10,7 @@ import {
     Linking,
 } from "react-native";
 import { useAuth } from "../context/AuthContext";
-import Icon from "react-native-vector-icons/FontAwesome";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
 
 export default function DrawerMenu({ children }) {
@@ -72,23 +72,35 @@ export default function DrawerMenu({ children }) {
                         Perfil
                     </Text>
                 </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => {
+                        navigation.navigate("Payment");
+                        drawerRef.current.closeDrawer();
+                    }}
+                >
+                    <Text style={{ fontSize: 16, marginBottom: 8 }}>
+                        Facturación
+                    </Text>
+                </TouchableOpacity>
             </View>
-            {/* Botones de contacto */}
             <View style={styles.buttonContainer}>
                 <TouchableOpacity
                     style={[styles.iconButton, styles.whatsapp]}
                     onPress={openWhatsApp}
                 >
-                    <Icon name="whatsapp" size={28} color="#fff" />
+                    <MaterialCommunityIcons name="whatsapp" size={28} color="#fff" />
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={[styles.iconButton, styles.facebook]}
                     onPress={openFacebook}
                 >
-                    <Icon name="facebook" size={28} color="#fff" />
+                    <MaterialCommunityIcons name="facebook" size={28} color="#fff" />
                 </TouchableOpacity>
             </View>
             <Button title="Cerrar Sesión" onPress={logout} />
+            <View style={styles.versionContainer}>
+                <Text style={styles.versionText}>Versión 1.0.1</Text>
+            </View>
         </View>
     );
 
@@ -173,5 +185,16 @@ const styles = StyleSheet.create({
     },
     facebook: {
         backgroundColor: "#1877F3",
+    },
+    versionContainer: {
+        position: "absolute",
+        bottom: 16,
+        left: 0,
+        right: 0,
+        alignItems: "center",
+    },
+    versionText: {
+        color: "#888",
+        fontSize: 14,
     },
 });

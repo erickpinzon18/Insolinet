@@ -15,7 +15,8 @@ const ProfileScreen = () => {
 
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.header}>Perfil del Usuario</Text>
+      <Text style={styles.header}>{user.nombre?.split("-")[1]} {user.apellidos}</Text>
+      <Text style={styles.subheader}>{user.nombre?.split("-")[0]}</Text>
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Datos Personales</Text>
         <ProfileItem label="Nombre" value={user.nombre} />
@@ -42,7 +43,7 @@ const ProfileScreen = () => {
         <ProfileItem label="Push" value={user.notificaciones_push ? "Activado" : "Desactivado"} />
         <ProfileItem label="Aviso en Pantalla" value={user.aviso_pantalla ? "Sí" : "No"} />
       </View>
-      <View style={styles.section}>
+      <View style={[styles.section, { marginBottom: 24 }]}>
         <Text style={styles.sectionTitle}>Otros</Text>
         <ProfileItem label="Aplicar Mora" value={user.aplicar_mora === "True" ? "Sí" : "No"} />
         <ProfileItem label="Aplicar Reconexión" value={user.aplicar_reconexion === "True" ? "Sí" : "No"} />
@@ -68,8 +69,15 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 26,
     fontWeight: 'bold',
-    marginBottom: 18,
+    marginBottom: 10,
     color: '#333',
+    textAlign: 'center',
+  },
+  subheader: {
+    fontSize: 20,
+    fontWeight: '600',
+    marginBottom: 12,
+    color: '#555',
     textAlign: 'center',
   },
   section: {

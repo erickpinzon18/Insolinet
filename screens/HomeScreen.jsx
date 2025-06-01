@@ -10,7 +10,7 @@ import {
 } from "react-native";
 // import DrawerMenu from "../components/DrawerMenu";
 import { useAuth } from "../context/AuthContext";
-import Icon from "react-native-vector-icons/FontAwesome";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 export default function HomeScreen() {
     const { user } = useAuth();
@@ -34,7 +34,6 @@ export default function HomeScreen() {
     };
 
     return (
-        // <DrawerMenu>
         <ScrollView contentContainerStyle={styles.scrollContainer}>
             <Text style={styles.name}>
                 Hola {user?.nombre?.split("-")[1]}!
@@ -125,17 +124,16 @@ export default function HomeScreen() {
                     style={[styles.iconButton, styles.whatsapp]}
                     onPress={openWhatsApp}
                 >
-                    <Icon name="whatsapp" size={32} color="#fff" />
+                    <MaterialCommunityIcons name="whatsapp" size={32} color="#fff" />
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={[styles.iconButton, styles.facebook]}
                     onPress={openFacebook}
                 >
-                    <Icon name="facebook" size={32} color="#fff" />
+                    <MaterialCommunityIcons name="facebook" size={32} color="#fff" />
                 </TouchableOpacity>
             </View>
         </ScrollView>
-        // </DrawerMenu>
     );
 }
 
