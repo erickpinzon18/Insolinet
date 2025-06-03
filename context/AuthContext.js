@@ -51,8 +51,8 @@ export const AuthProvider = ({ children }) => {
           throw new Error("Las credenciales no son correctas o no existen");
         }
         const data = await response.json();
-        // console.log("Datos del usuario:", data);
-        if (data && data.telefono === number) {
+        const newPhone = data.telefono?.split(",")[0] || data.telefono; 
+        if (data && newPhone === number) {
           // Aquí puedes guardar la información del usuario en el contexto
           // console.log("Usuario autenticado:", data);
           setUser({ id, ...data });
