@@ -20,7 +20,7 @@ export default function PaymentScreen() {
     };
 
     const openWhatsApp = () => {
-        const phoneNumber = "4271140263";
+        const phoneNumber = "+524271140263";
         const url = `https://wa.me/${phoneNumber}`;
         Linking.openURL(url);
     };

@@ -26,7 +26,7 @@ export default function DrawerMenu({ children }) {
     }, [isFocused]);
 
     const openWhatsApp = () => {
-        const phoneNumber = "4271140263";
+        const phoneNumber = "+524271140263";
         const url = `https://wa.me/${phoneNumber}`;
         Linking.openURL(url);
     };
@@ -99,7 +99,7 @@ export default function DrawerMenu({ children }) {
             </View>
             <Button title="Cerrar Sesión" onPress={logout} />
             <View style={styles.versionContainer}>
-                <Text style={styles.versionText}>Versión 1.0.3</Text>
+                <Text style={styles.versionText}>Versión 1.0.4</Text>
             </View>
         </View>
     );

@@ -29,7 +29,7 @@ const ProfileScreen = () => {
                 }
             );
             const data = await account.json(); 
-            console.log("Cuenta obtenida:", data?.facturas[0]?.total);
+            // console.log("Cuenta obtenida:", data?.facturas[0]?.total);
             setSaldo(data || {});
         })();
     }, [user]);
@@ -37,32 +37,33 @@ const ProfileScreen = () => {
     return (
         <ScrollView style={styles.container}>
             <Text style={styles.header}>
-                {user.nombre?.split("-")[1]} {user.apellidos}
+                {user?.nombre?.split("-")[1]} {user?.apellidos}
             </Text>
-            <Text style={styles.subheader}>{user.nombre?.split("-")[0]}</Text>
+            <Text style={styles.subheader}>{user?.nombre?.split("-")[0]}</Text>
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Datos Personales</Text>
-                <ProfileItem label="ID Servicio" value={user.id_servicio} />
-                <ProfileItem label="Nombre" value={user.nombre} />
-                <ProfileItem label="Apellidos" value={user.apellidos} />
+                <ProfileItem label="ID Servicio" value={user?.id_servicio} />
+                <ProfileItem label="Nombre" value={user?.nombre} />
+                <ProfileItem label="Apellidos" value={user?.apellidos} />
                 <ProfileItem
                     label="Tipo de Persona"
-                    value={user.tipo_persona}
+                    value={user?.tipo_persona}
                 />
-                <ProfileItem label="Usuario" value={user.usuario} />
-                <ProfileItem label="Teléfono" value={user.telefono} />
-                <ProfileItem label="Ciudad" value={user.ciudad} />
-                <ProfileItem label="Localidad" value={user.localidad} />
-                <ProfileItem label="Dirección" value={user.direccion} />
+                <ProfileItem label="Usuario" value={user?.usuario} />
+                <ProfileItem label="Teléfono" value={user?.telefono} />
+                <ProfileItem label="Ciudad" value={user?.ciudad} />
+                <ProfileItem label="Localidad" value={user?.localidad} />
+                <ProfileItem label="Dirección" value={user?.direccion} />
             </View>
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Facturación</Text>
-                <ProfileItem label="Saldo" value={saldo?.facturas[0]?.total} />
+                <ProfileItem label="Saldo" value={saldo?.facturas && saldo?.facturas[0]?.total || 0} />
                 <ProfileItem label="Estado del servicio" value={saldo?.estado} />
-                <ProfileItem label="Fecha de vencimiento" value={saldo?.facturas[0]?.fecha_vencimiento} />
+                <ProfileItem label="Fecha de vencimiento" value={saldo?.facturas && saldo?.facturas[0]?.fecha_vencimiento} />
                 <ProfileItem
                     label="Recargo por reactivación"
                     value={
+                        saldo?.facturas &&
                         saldo?.facturas[0]?.fecha_vencimiento &&
                         new Date(saldo?.facturas[0]?.fecha_vencimiento) < new Date()
                             ? user?.recargo_mora
@@ -72,7 +73,7 @@ const ProfileScreen = () => {
                 <ProfileItem
                     label="Generar Factura Electrónica"
                     value={
-                        user.generar_factura_electronica === "True"
+                        user?.generar_factura_electronica === "True"
                             ? "Sí"
                             : "No"
                     }
@@ -82,17 +83,17 @@ const ProfileScreen = () => {
                 <Text style={styles.sectionTitle}>Notificaciones</Text>
                 <ProfileItem
                     label="SMS"
-                    value={user.notificacion_sms ? "Activado" : "Desactivado"}
+                    value={user?.notificacion_sms ? "Activado" : "Desactivado"}
                 />
                 <ProfileItem
                     label="Push"
                     value={
-                        user.notificaciones_push ? "Activado" : "Desactivado"
+                        user?.notificaciones_push ? "Activado" : "Desactivado"
                     }
                 />
                 <ProfileItem
                     label="Aviso en Pantalla"
-                    value={user.aviso_pantalla ? "Sí" : "No"}
+                    value={user?.aviso_pantalla ? "Sí" : "No"}
                 />
             </View>
         </ScrollView>

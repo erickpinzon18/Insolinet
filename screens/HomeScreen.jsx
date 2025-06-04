@@ -17,7 +17,7 @@ export default function HomeScreen() {
     console.log("Usuario autenticadoaaa:", user.nombre.split("-"));
 
     const openWhatsApp = (message) => {
-        const phoneNumber = "4271140263";
+        const phoneNumber = "+524271140263";
         let url = `https://wa.me/${phoneNumber}`;
         // Si deseas enviar un mensaje predefinido, puedes agregarlo a la URL
         if (message)
