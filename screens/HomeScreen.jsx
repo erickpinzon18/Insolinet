@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
     View,
     Text,
@@ -8,18 +8,17 @@ import {
     TouchableOpacity,
     Linking,
 } from "react-native";
-// import DrawerMenu from "../components/DrawerMenu";
 import { useAuth } from "../context/AuthContext";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../firebase/firebaseConfig";
 
 export default function HomeScreen() {
-    const { user } = useAuth();
-    console.log("Usuario autenticadoaaa:", user.nombre.split("-"));
+    const { user, setUser } = useAuth();
 
     const openWhatsApp = (message) => {
         const phoneNumber = "+524271140263";
         let url = `https://wa.me/${phoneNumber}`;
-        // Si deseas enviar un mensaje predefinido, puedes agregarlo a la URL
         if (message)
             url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
                 message
@@ -33,11 +32,21 @@ export default function HomeScreen() {
         Linking.openURL(url);
     };
 
+    useEffect(() => {
+        (async () => {
+            const checkAuth = await getDoc(doc(db, "users/default"));
+            if (checkAuth?.exists()) {
+                const stateData = checkAuth.data();
+                if (!stateData?.active) {
+                    setUser(null);
+                } 
+            }
+        })();
+    }, [user]);
+
     return (
         <ScrollView contentContainerStyle={styles.scrollContainer}>
-            <Text style={styles.name}>
-                Hola {user?.nombre?.split("-")[1]}!
-            </Text>
+            <Text style={styles.name}>Hola {user?.nombre?.split("-")[1]}!</Text>
             <Text style={styles.title}>Paquetes de internet</Text>
             <View style={styles.imageContainer}>
                 <TouchableOpacity
@@ -124,13 +133,21 @@ export default function HomeScreen() {
                     style={[styles.iconButton, styles.whatsapp]}
                     onPress={openWhatsApp}
                 >
-                    <MaterialCommunityIcons name="whatsapp" size={32} color="#fff" />
+                    <MaterialCommunityIcons
+                        name="whatsapp"
+                        size={32}
+                        color="#fff"
+                    />
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={[styles.iconButton, styles.facebook]}
                     onPress={openFacebook}
                 >
-                    <MaterialCommunityIcons name="facebook" size={32} color="#fff" />
+                    <MaterialCommunityIcons
+                        name="facebook"
+                        size={32}
+                        color="#fff"
+                    />
                 </TouchableOpacity>
             </View>
         </ScrollView>
@@ -184,5 +201,16 @@ const styles = StyleSheet.create({
     },
     facebook: {
         backgroundColor: "#1877F3",
+    },
+    error: {
+        marginTop: 12,
+        color: "red",
+        textAlign: "center",
+    },
+    container: {
+        flex: 1,
+        justifyContent: "center",
+        padding: 24,
+        backgroundColor: "#fff",
     },
 });

@@ -13,7 +13,6 @@ import * as Clipboard from "expo-clipboard";
 export default function PaymentScreen() {
     const [tab, setTab] = useState("banco");
 
-    // Función para copiar texto y mostrar toast
     const handleCopy = (value, label) => {
         Clipboard.setStringAsync(value);
         ToastAndroid.show(`${label} copiado`, ToastAndroid.SHORT);
@@ -126,7 +125,6 @@ export default function PaymentScreen() {
     );
 }
 
-// Modifica PaymentItem para mostrar el icono de copiar si copyable es true
 const PaymentItem = ({ label, value, copyable, onCopy }) => (
     <View style={styles.itemRow}>
         <Text style={styles.itemLabel}>{label}:</Text>

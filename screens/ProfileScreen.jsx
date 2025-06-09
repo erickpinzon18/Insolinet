@@ -29,7 +29,6 @@ const ProfileScreen = () => {
                 }
             );
             const data = await account.json(); 
-            // console.log("Cuenta obtenida:", data?.facturas[0]?.total);
             setSaldo(data || {});
         })();
     }, [user]);
@@ -57,10 +56,10 @@ const ProfileScreen = () => {
             </View>
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Facturación</Text>
-                <ProfileItem label="Saldo" value={saldo?.facturas && saldo?.facturas[0]?.total || 0} />
+                <ProfileItemPrice label="Saldo" value={saldo?.facturas && saldo?.facturas[0]?.total || 0} />
                 <ProfileItem label="Estado del servicio" value={saldo?.estado} />
                 <ProfileItem label="Fecha de vencimiento" value={saldo?.facturas && saldo?.facturas[0]?.fecha_vencimiento} />
-                <ProfileItem
+                <ProfileItemPrice
                     label="Recargo por reactivación"
                     value={
                         saldo?.facturas &&
@@ -103,7 +102,14 @@ const ProfileScreen = () => {
 const ProfileItem = ({ label, value }) => (
     <View style={styles.itemRow}>
         <Text style={styles.itemLabel}>{label}:</Text>
-        <Text style={styles.itemValue}>{value || "-"}</Text>
+        <Text style={styles.itemValue}>{value || 0}</Text>
+    </View>
+);
+
+const ProfileItemPrice = ({ label, value }) => (
+    <View style={styles.itemRow}>
+        <Text style={styles.itemLabel}>{label}:</Text>
+        <Text style={styles.itemValue}>$ {value || 0}</Text>
     </View>
 );
 

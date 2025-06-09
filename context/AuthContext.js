@@ -1,7 +1,4 @@
 import { createContext, useState, useEffect, useContext } from "react";
-import { auth, db } from "../firebase/firebaseConfig";
-import { onAuthStateChanged, signOut } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
 
 export const AuthContext = createContext();
 
@@ -9,36 +6,7 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(false);
 
-    // useEffect(() => {
-    //   const unsubscribe = onAuthStateChanged(auth, async (usr) => {
-    //     if (usr) {
-    //       try {
-    //         // Consulta la información del usuario en Firestore
-    //         console.log('Usuario autenticado:', usr.uid);
-    //         const userDocRef = doc(db, 'users', usr.uid);
-    //         const userDoc = await getDoc(userDocRef);
-
-    //         if (userDoc.exists()) {
-    //           // Combina la información de Firebase Auth con la de Firestore
-    //           setUser(userDoc.data());
-    //         } else {
-    //           console.warn('No se encontró información del usuario en Firestore.');
-    //         }
-    //       } catch (error) {
-    //         console.error('Error al obtener información del usuario:', error);
-    //       }
-    //     } else {
-    //       setUser(null);
-    //     }
-    //     setLoading(false);
-    //   });
-
-    //   return unsubscribe;
-    // }, []);
-
     const login = async ({ id, number }) => {
-      // console.log("Login function called with:", { id, number });
-      // setLoading(true);
       try {
         const response = await fetch(`https://api.wisphub.io/api/clientes/${id}/perfil`, {
           method: "GET",
@@ -53,8 +21,6 @@ export const AuthProvider = ({ children }) => {
         const data = await response.json();
         const newPhone = data.telefono?.split(",")[0] || data.telefono; 
         if (data && newPhone === number) {
-          // Aquí puedes guardar la información del usuario en el contexto
-          // console.log("Usuario autenticado:", data);
           setUser({ id, ...data });
         } else {
           throw new Error("Las credenciales no son correctas o no existen");
@@ -69,7 +35,7 @@ export const AuthProvider = ({ children }) => {
     const logout = () => setUser("");
 
     return (
-        <AuthContext.Provider value={{ loading, logout, login, user }}>
+        <AuthContext.Provider value={{ loading, logout, login, user, setUser }}>
             {children}
         </AuthContext.Provider>
     );
