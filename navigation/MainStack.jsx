@@ -6,20 +6,25 @@ import PaymentScreen from '../screens/PaymentScreen';
 
 const Stack = createNativeStackNavigator();
 
+// Stack principal para usuarios autenticados, envuelto en DrawerMenu
 export default function MainStack() {
   return (
+    // DrawerMenu provee el menú lateral a todas las pantallas del stack
     <DrawerMenu>
       <Stack.Navigator>
+        {/* Pantalla de inicio */}
         <Stack.Screen
           name="Home"
           component={HomeScreen}
           options={{ headerShown: false }}
         />
+        {/* Pantalla de perfil */}
         <Stack.Screen
           name="Profile"
           component={ProfileScreen}
           options={{ headerShown: false }}
         />
+        {/* Pantalla de facturación */}
         <Stack.Screen
           name="Payment"
           component={PaymentScreen}

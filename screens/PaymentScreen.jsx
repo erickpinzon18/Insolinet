@@ -10,14 +10,17 @@ import {
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import * as Clipboard from "expo-clipboard";
 
+// Pantalla de métodos de pago
 export default function PaymentScreen() {
-    const [tab, setTab] = useState("banco");
+    const [tab, setTab] = useState("banco"); // Estado para tabs de pago
 
+    // Copiar valor al portapapeles y mostrar toast
     const handleCopy = (value, label) => {
         Clipboard.setStringAsync(value);
         ToastAndroid.show(`${label} copiado`, ToastAndroid.SHORT);
     };
 
+    // Abrir WhatsApp para soporte
     const openWhatsApp = () => {
         const phoneNumber = "+524271140263";
         const url = `https://wa.me/${phoneNumber}`;
@@ -26,7 +29,9 @@ export default function PaymentScreen() {
 
     return (
         <ScrollView style={styles.container}>
+            {/* Encabezado */}
             <Text style={styles.header}>Formas de Pago</Text>
+            {/* Tabs para cambiar entre métodos */}
             <View style={styles.tabContainer}>
                 <TouchableOpacity
                     style={[styles.tab, tab === "banco" && styles.tabActive]}
@@ -55,6 +60,7 @@ export default function PaymentScreen() {
                     </Text>
                 </TouchableOpacity>
             </View>
+            {/* Sección de transferencia bancaria */}
             {tab === "banco" && (
                 <View style={styles.section}>
                     <Text style={styles.sectionTitle}>
@@ -96,6 +102,7 @@ export default function PaymentScreen() {
                     />
                 </View>
             )}
+            {/* Sección de pagos OXXO */}
             {tab === "oxxo" && (
                 <View style={styles.section}>
                     <Text style={styles.sectionTitle}>Pagos en OXXO</Text>
@@ -105,6 +112,7 @@ export default function PaymentScreen() {
                     </Text>
                 </View>
             )}
+            {/* Información adicional y botón de WhatsApp */}
             <View style={styles.infoBox}>
                 <Text style={styles.infoText}>
                     Por favor, envía tu comprobante de pago al WhatsApp de
@@ -125,6 +133,7 @@ export default function PaymentScreen() {
     );
 }
 
+// Componente para mostrar un dato de pago, con opción de copiar
 const PaymentItem = ({ label, value, copyable, onCopy }) => (
     <View style={styles.itemRow}>
         <Text style={styles.itemLabel}>{label}:</Text>
@@ -143,6 +152,7 @@ const PaymentItem = ({ label, value, copyable, onCopy }) => (
     </View>
 );
 
+// Estilos para la pantalla de pagos
 const styles = StyleSheet.create({
     container: {
         flex: 1,

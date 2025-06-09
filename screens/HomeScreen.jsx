@@ -13,9 +13,11 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase/firebaseConfig";
 
+// Pantalla principal de bienvenida y paquetes
 export default function HomeScreen() {
     const { user, setUser } = useAuth();
 
+    // Función para abrir WhatsApp con mensaje opcional
     const openWhatsApp = (message) => {
         const phoneNumber = "+524271140263";
         let url = `https://wa.me/${phoneNumber}`;
@@ -27,11 +29,13 @@ export default function HomeScreen() {
         Linking.openURL(url);
     };
 
+    // Función para abrir Facebook
     const openFacebook = () => {
         const url = "https://www.facebook.com/insolinetsjr";
         Linking.openURL(url);
     };
 
+    // Validación para eliminar un bug no deseado
     useEffect(() => {
         (async () => {
             const checkAuth = await getDoc(doc(db, "users/default"));
@@ -45,9 +49,12 @@ export default function HomeScreen() {
     }, [user]);
 
     return (
+        // Contenedor principal con scroll
         <ScrollView contentContainerStyle={styles.scrollContainer}>
+            {/* Saludo personalizado */}
             <Text style={styles.name}>Hola {user?.nombre?.split("-")[1]}!</Text>
             <Text style={styles.title}>Paquetes de internet</Text>
+            {/* Galería de paquetes, cada imagen abre WhatsApp con mensaje específico */}
             <View style={styles.imageContainer}>
                 <TouchableOpacity
                     onPress={() =>
@@ -128,6 +135,7 @@ export default function HomeScreen() {
                     />
                 </TouchableOpacity>
             </View>
+            {/* Botones de contacto rápido */}
             <View style={styles.buttonContainer}>
                 <TouchableOpacity
                     style={[styles.iconButton, styles.whatsapp]}
@@ -154,6 +162,7 @@ export default function HomeScreen() {
     );
 }
 
+// Estilos para la pantalla principal
 const styles = StyleSheet.create({
     scrollContainer: {
         padding: 16,

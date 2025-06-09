@@ -3,19 +3,16 @@ import LoginScreen from '../screens/LoginScreen';
 
 const Stack = createNativeStackNavigator();
 
+// Stack para usuarios no autenticados (solo login)
 export default function AuthStack() {
   return (
     <Stack.Navigator>
+      {/* Pantalla de login */}
       <Stack.Screen
         name="Login"
         component={LoginScreen}
         options={{ headerShown: false }}
       />
-      {/* <Stack.Screen
-        name="Register"
-        component={RegisterScreen}
-        options={{ title: 'Registrarse' }}
-      /> */}
     </Stack.Navigator>
   );
 }

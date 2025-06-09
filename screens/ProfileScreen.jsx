@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { View, Text, ScrollView, StyleSheet } from "react-native";
 import { useAuth } from "../context/AuthContext";
 
+// Pantalla de perfil del usuario
 const ProfileScreen = () => {
     const { user } = useAuth();
-    console.log("Usuario autenticado:", user.id_servicio);
     const [saldo, setSaldo] = useState({});
 
+    // Si no hay usuario, mostrar mensaje
     if (!user) {
         return (
             <View style={styles.container}>
@@ -15,6 +16,7 @@ const ProfileScreen = () => {
         );
     }
 
+    // Obtener saldo y facturación del usuario desde la API
     useEffect(() => {
         (async () => {
             const account = await fetch(
@@ -34,11 +36,14 @@ const ProfileScreen = () => {
     }, [user]);
 
     return (
+        // Scroll con secciones de información
         <ScrollView style={styles.container}>
+            {/* Encabezado con nombre */}
             <Text style={styles.header}>
                 {user?.nombre?.split("-")[1]} {user?.apellidos}
             </Text>
             <Text style={styles.subheader}>{user?.nombre?.split("-")[0]}</Text>
+            {/* Datos personales */}
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Datos Personales</Text>
                 <ProfileItem label="ID Servicio" value={user?.id_servicio} />
@@ -54,6 +59,7 @@ const ProfileScreen = () => {
                 <ProfileItem label="Localidad" value={user?.localidad} />
                 <ProfileItem label="Dirección" value={user?.direccion} />
             </View>
+            {/* Facturación */}
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Facturación</Text>
                 <ProfileItemPrice label="Saldo" value={saldo?.facturas && saldo?.facturas[0]?.total || 0} />
@@ -78,6 +84,7 @@ const ProfileScreen = () => {
                     }
                 />
             </View>
+            {/* Notificaciones */}
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Notificaciones</Text>
                 <ProfileItem
@@ -99,6 +106,7 @@ const ProfileScreen = () => {
     );
 };
 
+// Componente para mostrar un dato de perfil
 const ProfileItem = ({ label, value }) => (
     <View style={styles.itemRow}>
         <Text style={styles.itemLabel}>{label}:</Text>
@@ -106,6 +114,7 @@ const ProfileItem = ({ label, value }) => (
     </View>
 );
 
+// Componente para mostrar un dato de perfil con formato de precio
 const ProfileItemPrice = ({ label, value }) => (
     <View style={styles.itemRow}>
         <Text style={styles.itemLabel}>{label}:</Text>
@@ -113,6 +122,7 @@ const ProfileItemPrice = ({ label, value }) => (
     </View>
 );
 
+// Estilos para la pantalla de perfil
 const styles = StyleSheet.create({
     container: {
         flex: 1,

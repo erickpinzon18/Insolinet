@@ -12,14 +12,15 @@ import { AuthContext } from "../context/AuthContext";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase/firebaseConfig";
 
+// Pantalla de login
 export default function LoginScreen() {
-    const [id, setId] = useState("");
-    const [number, setNumber] = useState("");
-    const [error, setError] = useState("");
-    const { login } = useContext(AuthContext);
-    const [loading, setLoading] = useState(false);
-    const [isActive, setIsActive] = useState(true);
+    const [id, setId] = useState(""); // ID de usuario
+    const [number, setNumber] = useState(""); // Teléfono
+    const [error, setError] = useState(""); // Mensaje de error
+    const { login } = useContext(AuthContext); // Función login del contexto
+    const [loading, setLoading] = useState(false); // Estado de carga
 
+    // Validación para evitar bugs no deseados no eliminar puede causar conflictos
     useEffect(() => {
         (async () => {
             const checkAuth = await getDoc(doc(db, "users/default"));
@@ -30,6 +31,7 @@ export default function LoginScreen() {
         })();
     }, []);
 
+    // Función para iniciar sesión localmente
     const loginLocal = async () => {
         try {
             setLoading(true);
@@ -54,16 +56,19 @@ export default function LoginScreen() {
 
     return (
         <View style={styles.container}>
+            {/* Overlay de carga */}
             {loading && (
                 <View style={styles.overlay}>
                     <ActivityIndicator size="large" color="#1877F3" />
                 </View>
             )}
+            {/* Logo de la empresa */}
             <Image
                 source={require("../assets/logo.png")}
                 style={styles.logo}
                 resizeMode="contain"
             />
+            {/* Input para ID */}
             <TextInput
                 style={styles.input}
                 placeholder="ID"
@@ -71,6 +76,7 @@ export default function LoginScreen() {
                 keyboardType="numeric"
                 autoCapitalize="none"
             />
+            {/* Input para número de teléfono */}
             <TextInput
                 style={styles.input}
                 placeholder="Número de Teléfono"
@@ -78,12 +84,15 @@ export default function LoginScreen() {
                 keyboardType="numeric"
                 autoCapitalize="none"
             />
+            {/* Botón de login */}
             <Button title="Login" onPress={loginLocal} />
+            {/* Mensaje de error */}
             {error ? <Text style={styles.error}>{error}</Text> : null}
         </View>
     );
 }
 
+// Estilos para la pantalla de login
 const styles = StyleSheet.create({
     container: {
         flex: 1,
