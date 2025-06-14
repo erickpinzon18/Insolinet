@@ -12,16 +12,16 @@ export default function MainStack() {
     // DrawerMenu provee el menú lateral a todas las pantallas del stack
     <DrawerMenu>
       <Stack.Navigator>
-        {/* Pantalla de inicio */}
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{ headerShown: false }}
-        />
         {/* Pantalla de perfil */}
         <Stack.Screen
           name="Profile"
           component={ProfileScreen}
+          options={{ headerShown: false }}
+        />
+        {/* Pantalla de inicio */}
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
           options={{ headerShown: false }}
         />
         {/* Pantalla de facturación */}

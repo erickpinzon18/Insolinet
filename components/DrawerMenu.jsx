@@ -61,7 +61,7 @@ export default function DrawerMenu({ children }) {
             <View style={{ flexDirection: "col", marginBottom: 16 }}>
                 <TouchableOpacity
                     onPress={() => {
-                        navigation.navigate("Home");
+                        navigation.navigate("Profile");
                         drawerRef.current.closeDrawer();
                     }}
                 >
@@ -71,12 +71,12 @@ export default function DrawerMenu({ children }) {
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
-                        navigation.navigate("Profile");
+                        navigation.navigate("Home");
                         drawerRef.current.closeDrawer();
                     }}
                 >
                     <Text style={{ fontSize: 16, marginBottom: 8 }}>
-                        Perfil
+                        Paquetes
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -109,7 +109,7 @@ export default function DrawerMenu({ children }) {
             <Button title="Cerrar Sesión" onPress={logout} />
             {/* Versión de la app */}
             <View style={styles.versionContainer}>
-                <Text style={styles.versionText}>Versión 1.0.4</Text>
+                <Text style={styles.versionText}>Versión 1.0.5</Text>
             </View>
         </View>
     );
