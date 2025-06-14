@@ -19,6 +19,7 @@ export default function LoginScreen() {
     const [error, setError] = useState(""); // Mensaje de error
     const { login } = useContext(AuthContext); // Función login del contexto
     const [loading, setLoading] = useState(false); // Estado de carga
+    const [isActive, setIsActive] = useState(true); // Estado de actividad del servicio
 
     // Validación para evitar bugs no deseados no eliminar puede causar conflictos
     useEffect(() => {
